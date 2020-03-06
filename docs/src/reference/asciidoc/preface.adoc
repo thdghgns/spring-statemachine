@@ -1,18 +1,14 @@
 [preface]
 == Preface
 
-The concept of a state machine is most likely older than any reader
-of this reference documentation and definitely older than the Java
-language itself. Description of finite automata dates back to 1943
-when gentlemen Warren McCulloch and Walter Pitts wrote a paper about
-it. Later George H. Mealy presented a state machine concept (known as
-a "`Mealy Machine`") in 1955. A year later, in 1956, Edward F.
-Moore presented another paper, in which he described what is known as
-a "`Moore Machine`". If
-you have ever read anything about state machines, the names, Mealy and Moore,
-should have popped up at some point.
+State machine의 개념은 이 레퍼런스 문서의 독자나 java 언어 그 자체보다 오래되었을 가능성이 크다.
+유한 오토마타에 대한 설명은 1943년 Warren McCulloch와 Walter Pitts가 그것에 대해 논문을 적은 것으로 거슬러 올라간다.
+그 후 1955년, George H. Mealy가 state machine 컨셉(“`Mealy Machine`”이라고 잘 알려)에 대해 소개한다.진
+1년 후 1956년, Edward F.Moore가 “`Moore Machine`”라고 알려진 것에 대해 설명하는 또 다른 논문을 발표한다.
+만약 당신이 state machines, 그 이름,  Mealy and Moore에 대해 어느것 이라도 읽어봤다면,
+어느 포인트에서 떠오를 것이다.
 
-This reference documentation contains the following parts:
+이 참고문서는 다음의 내용을 포함하고 있다:
 
 <<introduction>> contains introduction to this reference documentation.
 

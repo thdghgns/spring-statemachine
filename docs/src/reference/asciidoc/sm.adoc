@@ -1,58 +1,57 @@
 [[statemachine]]
 = Using Spring Statemachine
 
-This part of the reference documentation explains the core functionality
-that Spring Statemachine provides to any Spring based application.
+참고 문서의 이 파트는 Spring Statemachine이 다른 어떤 Spring 기반 application에 제공하는 핵심 기능에 대해 설명한다.
 
-It includes the following topics:
+그것은 다음 주제를 포함한다.:
 
-* <<sm-config>> describes the generic configuration support.
+* <<sm-config>> : 일반적인 설정 지원을 설명한다.
 
-* <<sm-machineid>> describes the use of machine id.
+* <<sm-machineid>> : machine id 사용에 대해 설명한다.
 
-* <<sm-factories>> describes the generic state machine factory support.
+* <<sm-factories>> : 일반적인 state machine factory 지원에 대해 설명한다.
 
-* <<sm-deferevents>> describes the deferred event support.
+* <<sm-deferevents>> : deferred event 지원에 대해 설명한다.
 
-* <<sm-scopes>> describes the scope support.
+* <<sm-scopes>> : scope 지원에 대해 설명한다.
 
-* <<sm-actions>> describes the actions support.
+* <<sm-actions>> : actions 지원에 대해 설명한다.
 
-* <<sm-guards>> describes the guard support.
+* <<sm-guards>> : guard 지원에 대해 설명한다.
 
-* <<sm-extendedstate>> describes the extended state support.
+* <<sm-extendedstate>> : 확장된 state 지원에 대해 설명한다.
 
-* <<sm-statecontext>> describes the state context support.
+* <<sm-statecontext>> : state context 지원에 대해 설명한다.
 
-* <<sm-triggers>> describes the use of triggers.
+* <<sm-triggers>> : triggers 사용에 대해 설명한다.
 
-* <<sm-listeners>> describes the use of state machine listeners.
+* <<sm-listeners>> : state machine listeners 사용에 대해 설명한다.
 
-* <<sm-context>> describes the generic Spring application context support.
+* <<sm-context>> : 일반적인 Spring application context 지원에 대해 설명한다.
 
-* <<sm-accessor>> describes the state machine internal accessor support.
+* <<sm-accessor>> : state machine 내부 accessor 지원에 대해 설명한다.
 
-* <<sm-interceptor>> describes the state machine error handling support.
+* <<sm-interceptor>> : state machine 에러 핸들링 지원에 대해 설명한다.
 
-* <<sm-security>> describes the state machine security support.
+* <<sm-security>> : state machine security 지원에 대해 설명한다.
 
-* <<sm-error-handling>> describes the state machine interceptor support.
+* <<sm-error-handling>> : state machine 인터셉터 지원에 대해 설명한다.
 
-* <<sm-service>> describes the state machine service support.
+* <<sm-service>> : state machine service 지원에 대해 설명한다.
 
-* <<sm-persist>> describes the state machine persisting support.
+* <<sm-persist>> : state machine persisting 지원에 대해 설명한다.
 
-* <<sm-boot>> describes the Spring Boot support.
+* <<sm-boot>> : Spring Boot 지원에 대해 설명한다.
 
-* <<sm-monitoring>> describes the monitoring and trancing support.
+* <<sm-monitoring>> : monitoring 과 trancing 지원에 대해 설명한다.
 
-* <<sm-distributed>> describes the distributed state machine support.
+* <<sm-distributed>> : 분산 state machine 지원에 대해 설명한다.
 
-* <<sm-test>> describes the state machine testing support.
+* <<sm-test>> : state machine 테스트 지원에 대해 설명한다.
 
-* <<sm-papyrus>> describes the state machine UML modeling support.
+* <<sm-papyrus>> : state machine UML 모델링 지원에 대해 설명한다.
 
-* <<sm-repository>> describes the state machine repository config support.
+* <<sm-repository>> : state machine repository 설정 지원에 대해 설명한다.
 
 include::sm-config.adoc[]
 
