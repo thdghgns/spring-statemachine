@@ -1,45 +1,32 @@
 [[sm-config]]
 == Statemachine Configuration
 
-One of the common tasks when using a state machine is to design its
-runtime configuration. This chapter focuses on how Spring
-Statemachine is configured and how it leverages Spring's lightweight
-IoC containers to simplify the application internals to make it more
-manageable.
+state machine을 사용할 때 일반적인 작업 중 하나는 그것의 runtime 설정을 설계하는 것이다. 
+이 챕터는 Spring Statemachine이 어떻게 설정되고, 그리고 그것이 관리가 편리하게 하기 위해 Application 내부를 간단하게 하려고
+Spring의 가벼운 IoC 컨테이너를 어떻게 이용했는지에 초점을 맞춘다.
 
-NOTE: Configuration examples in this section are not feature complete. That is,
-you always need to have definitions of both states and transitions.
-Otherwise, state machine configuration would be ill-formed. We have
-simply made code snippets less verbose by leaving other needed parts
-out.
+NOTE: 이 섹션의 예제는 완전하지 않다. 당신은 항상 state와 transition 둘 모두의 정의를 가지고 있을 필요가 있다.
+그렇지 않으면, state machine 설정을 잘못된 형식일 수 있다. 우리는 다른 부분이 필요로 하는 부분은 제거하여 code snippet을 간단하게 만들었다.
 
 [[statemachine-config-annotations]]
 === Using `enable` Annotations
 
-We use two familiar Spring _enabler_ annotations to ease configuration:
-`@EnableStateMachine` and `@EnableStateMachineFactory`.
-These annotations, when placed in a `@Configuration` class, enable
-some basic functionality needed by a state machine.
+우리는 간편한 설정을 위해 Spring의 두가지 친숙한 _enabler_ 어노테이션을 사용한다.: `@EnableStateMachine` and `@EnableStateMachineFactory`.
+이 어노테이션들은 @Configuration 클래스 안에 사용될 경우 state machine이 필요로 하는 몇가지 기본 기능을 활성화시킨다.
 
-You can use `@EnableStateMachine` when you need a configuration to create an
-instance of `StateMachine`. Usually, a `@Configuration` class extends adapters
-(`EnumStateMachineConfigurerAdapter` or `StateMachineConfigurerAdapter`), which
-lets you override configuration callback methods. We automatically
-detect whether you use these adapter classes and modify the runtime configuration
-logic accordingly.
+당신은 하나의 StateMachine 인스턴스가 필요할 때 @EnableStateMachine 을 사용할 수 있다.
+일반적으로, @Configuration 클래스는 당신이 configuration callback 메소드 를 override 할 수 있는 adapter(EnumStateMachineConfigurerAdapter or StateMachineConfigurerAdapter)를 확장한다.
+우리는 당신이 이 adapter 클래스를 사용하고 runtime 설정 로직을 수정한 것을 자동으로 탐지한다.
 
-You can use `@EnableStateMachineFactory` when you need a configuration to create an
-instance of a `StateMachineFactory`.
+당신은 `StateMachineFactory` 인스턴스를 생성하는 설정이 필요할 때 `@EnableStateMachineFactory` 을 사용할 수 있다.
 
-NOTE: Usage examples of these are shown in below sections.
+NOTE: 이 예제의 사용법은 아래 섹션에 있다.
 
 [[statemachine-config-states]]
 === Configuring States
 
-We get into more complex configuration examples a bit later in this guide, but
-we first start with something simple. For most simple state
-machine, you can use `EnumStateMachineConfigurerAdapter` and define
-possible states and choose the initial and optional end states.
+우리는 이 가이드 중간에 좀 더 복잡한 설정 예제를 본다. 그러나 우리는 우선 간단한 것으로 시작한다.
+대부분의 간단한 state machine에서 당신은 `EnumStateMachineConfigurerAdapter` 을 사용할 수 있고, 가능한 state와 초기상태와 부가적인 종료상태를 정의할 수 있다.
 
 ====
 [source,java,indent=0]
@@ -48,10 +35,8 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetAA]
 ----
 ====
 
-You can also use strings instead of enumerations as states and
-events by using `StateMachineConfigurerAdapter`, as shown in the next example. Most
-of the configuration examples ues enumerations, but, generally speaking,
-you can interchange strings and enumerations.
+당신은 다음예제에서 보듯이 `StateMachineConfigurerAdapter` 을 사용해서 state와 event에 enumerations 대신에 string을 사용할 수 있다.
+대부분의 설정 예제는 enumerations을 사용하지만, 일반적으로 말하면 당신은 strings 과 enumerations 간에 바꿔서 할 수 있다.
 
 ====
 [source,java,indent=0]
@@ -60,17 +45,13 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetAB]
 ----
 ====
 
-NOTE: Using enumerations brings a safer set of states and event types but
-limits possible combinations to compile time. Strings do not have this
-limitation and let you use more dynamic ways to build state
-machine configurations but do not allow same level of safety.
+NOTE: enumerations 사용은 state와 event 를 type safe 하게 설정할 수 있다. 하지만 가능한 조합을 컴파일 타임에 제한된다.
+String은 이러한 제한이 없어 당신이 더 자유로운 방식으로 state machine을 설정할 수 있게 한다. 하지만 같은 레벨의 safety는 허용하지 않는다.
 
 === Configuring Hierarchical States
 
-You can define hierarchical states can by using multiple `withStates()`
-calls, where you can use `parent()` to indicate that these
-particular states are sub-states of some other state.
-The following example shows how to do so:
+당신은 다수의 `withStates()` 호출로 계층적인 state를 정의할 수 있다. 당신은 `parent()` 를 사용해서 이 특별한 state는 다른 state의 sub-state 임을 가리킬 수 있다.
+다음의 예제는 그것을 어떻게 하는지 이다.:
 
 ====
 [source,java,indent=0]
@@ -81,13 +62,9 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetB]
 
 === Configuring Regions
 
-There are no special configuration methods to mark a collection of
-states to be part of an orthogonal state. To put it simply, orthogonal
-state is created when the same hierarchical state machine has multiple sets
-of states, each of which has an initial state. Because an individual state
-machine can only have one initial state, multiple initial states must
-mean that a specific state must have multiple independent regions.
-The following example shows how to define regions:
+state 의 콜랙션이 직교상태의 부분임을 표시하는 특별한 설정은 없다. 간단하게, 직교상태는 동일한 계층 state machine이 여러 개의 각각의 초기 상태를 가지는 state 세트를 가질 때 생성된다.
+각각의 state machine은 오직 하나의 초기 상태만 가질 수 있기 때문에 여러개의 초기 state는 반드시 특정한 statem는 독립된 각각의 region을 갖아야 함을 의미한다. 
+다음의 얘제는 region을 어떻게 정의하는지 이다.:
 
 ====
 [source,java,indent=0]
@@ -96,11 +73,8 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetP]
 ----
 ====
 
-When persisting machines with regions or generally
-relying on any functionalities to reset a machine, you may need
-to have a dedicated ID for a region. By default, this ID
-is a generated UUID. As the following example shows, `StateConfigurer` has
-a method called `region(String id)` that lets you set the ID for a region:
+machine을 region과 함께 저장하거나 일반적으로 machine을 reset하는 어떤 기능에 의지한다면, 당신은 region에 dedicated ID를 갖어야 한다.
+기본적으로 이 ID는 생성된 UUID이다. 다음 예제가 보여주듯이, `StateConfigurer` 는 region에 ID를 셋팅하는 `region(String id)` 라는 메소드가 있다.
 
 ====
 [source,java,indent=0]
@@ -111,10 +85,10 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetPP]
 
 === Configuring Transitions
 
-We support three different types of transitions: `external`,
-`internal`, and `local`. Transitions are triggered either by a signal
-(which is an event sent into a state machine) or by a timer.
-The following example shows how to define all three kinds of transitions:
+우리는 3가지 다른 타입의 transition을 지원한다.: `external`, `internal`, and `local`.
+Transition 은 signal(state machine으로 전달된 event)이나 timer에 의해 트리거된다.
+다음 예제는 3가지 타입의 transition을 어떻게 정의하는지 보여준다.:
+
 ====
 [source,java,indent=0]
 ----
@@ -124,9 +98,8 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetC]
 
 === Configuring Guards
 
-You can use guards to protect state transitions. You can use the `Guard` interface
-to do an evaluation where a method has access to a `StateContext`.
-The following example shows how to do so:
+당신은 state transition을 보호하기 위해 guard를 사용할 수 있다. 당신은 `StateContext` 에 접근하는 메소드에서 비교하기 위해 `Guard` 인터페이스를 사용할 수 있다.
+다음 예제는 어떻게 하는지 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -135,22 +108,18 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetD]
 ----
 ====
 
-In the preceding example, we used two different types of guard configurations. First, we
-created a simple `Guard` as a bean and attached it to the transition between
-states `S1` and `S2`.
+앞의 예제에서, 우리는 다른 2가지 타입의 guard 설정을 사용했다. 
+첫째, 우리는 간단한 `Guard` 를 bean으로 만들고 `S1` 과 `S2` state 사이의 transition 에 붙였다.
 
-Second, we used a SPeL expression as a guard to dicate that the
-expression must return a `BOOLEAN` value. Behind the scenes, this
-expression-based guard is a `SpelExpressionGuard`. We attached it to
-the transition between states `S2` and `S3`. Both guards
-always evaluate to `true`.
+둘째, 우리는 SPeL 표현식을 guard로 사용하여 표현식이 `BOOLEAN` 값을 리턴하도록 하였다. 사실 표현식 기반의 guard는 `SpelExpressionGuard` 이다.
+우리는 그것을 `S2` 과 `S3` state 사아애 transition에 붙였다. 두개의 guard 모두 항상 `true` 로 평가된다.
 
 [[statemachine-config-actions]]
 === Configuring Actions
 
-You can define actions to be executed with transitions and states.
-An action is always run as a result of a transition that
-originates from a trigger. The following example shows how to define an action:
+당신은 transition과 state와 함께 실행되도록 action을 정의할 수 있다.
+트리거되는 transition에 기반하는 action은 trasition의 결과로 항상 실행된다.
+다음 예제는 어떻게 action을 정의하는지 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -159,9 +128,8 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetEA]
 ----
 ====
 
-In the preceding example, a single `Action` is defined as a bean named `action` and associated
-with a transition from `S1` to `S2`.
-The following example shows how to use an action multiple times:
+앞의 예제에서 단일 `Action` 이 `action` 이라는 이름의 bean으로 정의되고 `S1` 에서 `S2` 로의 transition에 연관되었다.
+다음 예제는 어떻게 하나의 action을 여러번 사용하는지 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -170,42 +138,29 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetEB]
 ----
 ====
 
-NOTE: Usually, you would not define the same `Action` instance for different
-stages, but we did it here to not make too much noise in a code
-snippet.
+NOTE: 보통 당신은 동일한 `Action` 인스턴스를 다른 stage에 정의하지 않는다. 그러나 우리는 code snippet을 복잡하지 않게 하려고 그렇게 했다.
 
-In the preceding example, a single `Action` is defined by the bean named `action` and associated
-with states `S1`, `S2`, and `S3`. We need to clarify what is going on here:
+앞의 예제에서 단일 `Action` 이 `action` 이라는 이름의 bean으로 정의되고 `S1`, `S2`, 그리고 `S3` 상태와 연관되었다.
+우리는 여기서 무슨일이 일어나고 있는지 분명히 해야 한다.:
 
-* We defined an action for the initial state, `S1`.
-* We defined an entry action for state `S1` and left the exit action empty.
-* We defined an exit action for state `S2` and left the entry action empty.
-* We defined a single state action for state `S2`.
-* We defined both entry and exit actions for state `S3`.
-* Note that state `S1` is used twice with `initial()` and `state()`
-  functions. You need to do this only if you want to define entry or exit
-  actions with initial state.
+* 우리는 초기상태인 `S1` 을 위해 하나의 action을 정의했다.
+* 우리는 `S1` 상태에 entry action을 정의했고 exit action은 비워두었다.
+* 우리는 `S2` 상태에 exit action을 정의했고 entry action은 비워두었다.
+* 우리는 `S2` 상태에 단일 state action을 정의했다.
+* 우리는 `S3` 상태에 entry action과 exit action 둘다 정의했다.
+* `S1` 은 `initial()` 과 `state()` funtion에서 두번 사용되었음을 참고해라. 당신은 오직 entry 또는 exit action을 초기 상태에 정의하고 싶을 때만 이렇게 할 필요가 있다.
 
-IMPORTANT: Defining action with `initial()` function only runs a particular
-action when a state machine or sub state is started. This action
-is an initializing action that is run only once. An action defined
-with `state()` is then run if the state machine transitions back
-and forward between initial and non-initial states.
+IMPORTANT: action을 `initial()` function고 함께 정의하는 것은 오직 state machine 또는 sub state 가 시작되는 특별할 때만 실행된다.
+이것은 오직 한번만 실행되는 초기화 action이다. `state()` 과 함께 정의된 action은 state machine 이 초기 상태와 초기 상태가 아닌 상태 사이에 transition 될 때 실행된다.
 
 ==== State Actions
 
-State actions are run differently compared to entry and exit
-actions, because execution happens after state has been entered
-and can be cancelled if state exit happens before a particular action
-has been completed.
+State action 는 entry 와 exit 를 비교했을 때 다르게 동작한다. 왜냐면 실행은 state가 enter한 이후에 일어나고, 만약 특정 action이 완료되기 전에 state exit가 일어난다면 cancel 될 수 있기 때문이다.
 
-State actions are executed using normal reactive flow by subscribing with
-a Reactor's default parallel scheduler. This means that, whatever you do in your
-action, you need to be able to catch `InterruptedException` or, more generally,
-periodically check whether `Thread` is interrupted.
+State action 은 Reactor의 기본 병령 스케쥴러를 구독함으로써 일반 reactive flow를 사용하여 실행된다.
+이것은 당신이 action에서 뭘하든지 `InterruptedException` 을 catch할 수 있게 하거나, 또는 더 일반적으로는 `Thread` 가 interrupt 되었는지 주기적으로 체크해야 한다.
 
-The following example shows typical configuration that uses default the `IMMEDIATE_CANCEL`, which
-would immediately cancel a running task when its state is complete:
+다음 예제는 state가 완료되었을 때 실행중인 task를 즉시 취소시키는 기본 `IMMEDIATE_CANCEL` 을 사용하는 일반적인 설정을 보여준다.
 
 ====
 [source,java,indent=0]
@@ -214,9 +169,9 @@ include::samples/DocsConfigurationSampleTests11.java[tags=snippetA]
 ----
 ====
 
-You can set a policy to `TIMEOUT_CANCEL` together with a global timeout
-for each machine. This changes state behavior to await action completion
-before cancelation is requested. The following example shows how to do so:
+당신은 정책을 각 state machine 의 global timeout 과 함께 `TIMEOUT_CANCEL` 으로 설정할 수 있다.
+이것은 state의 동작을 cancel 요청이 오기까지 action이 완료되기를 기다리도록 변경한다.
+다음 예제는 어떻게 하는지 보여준다.:
 
 ====
 [source,java,indent=0]
