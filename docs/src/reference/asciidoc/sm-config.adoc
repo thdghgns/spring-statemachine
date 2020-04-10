@@ -118,7 +118,7 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetD]
 === Configuring Actions
 
 당신은 transition과 state와 함께 실행되도록 action을 정의할 수 있다.
-트리거되는 transition에 기반하는 action은 trasition의 결과로 항상 실행된다.
+트리거되는 transition에 기반하는 action은 transition의 결과로 항상 실행된다.
 다음 예제는 어떻게 action을 정의하는지 보여준다.:
 
 ====
@@ -180,11 +180,10 @@ include::samples/DocsConfigurationSampleTests11.java[tags=snippetB]
 ----
 ====
 
-If `Event` directly takes a machine into a state so that event headers
-are available to a particular action, you can also use a dedicated
-event header to set a specific timeout (defined in `millis`).
-You can use the reserved header value `StateMachineMessageHeaders.HEADER_DO_ACTION_TIMEOUT`
-for this purpose. The following example shows how to do so:
+만약 `Event` 가 직접 machine을 하나의 state로 만들어서 event headers가 특정 action에게 노출될 수 있다면, 
+당신은 특정 timeout을 설정하는 전용 헤더 역시 사용할 수 있다 (`millis` 로 정의된).
+당신은 예약된 헤더 값인 `StateMachineMessageHeaders.HEADER_DO_ACTION_TIMEOUT` 을 이 목적으로 사용할 수 있다.
+다음 예제는 어떻게 하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -196,11 +195,9 @@ include::samples/DocsConfigurationSampleTests11.java[tags=snippetC]
 [[statemachine-config-transition-actions-errorhandling]]
 ==== Transition Action Error Handling
 
-You can always catch exceptions manually. However, with actions defined for
-transitions, you can define an error action that is called if an
-exception is raised. The exception is then available from a `StateContext`
-passed to that action. The following example shows how to create a state
-that handles an exception:
+당인은 항상 수동으로 exceptions을 catch할 수 있다. 그러나, transition을 위해 정의된 action으로는 당신은 exception이 발생했을 때 호출되는 error action을 정의할 수 있다.
+exception은 action에 전달된 `StateContext` 에서 접근 가능하다. 
+다음 예제는 exception을 핸들링하는 state를 생성하는 것을 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -209,8 +206,8 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetEC]
 ----
 ====
 
-If need be, you can manually create imilar logic for every action.
-The following example shows how to do so:
+필요한 경우, 당신은 모든 action에 유사한 로직을 수동으로 만들 수 있다.
+다음 예제는 어떻게 하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -222,12 +219,11 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetED]
 [[statemachine-config-state-actions-errorhandling]]
 ==== State Action Error Handling
 
-Logic similar to the logic that handles errors in state transitions is also available
-for entry to a state and exit from a state.
+state transition에서 error를 다루는 로직의 유사 로직은 state entry와 exit 에서도 사용 가능하다.
 
-For these situations, `StateConfigurer` has methods called `stateEntry`, `stateDo`, and
-`stateExit`. These methods define an `error` action together with a normal (non-error) `action`.
-The following example shows how to use all three methods:
+이러한 상황에서, `StateConfigurer` 는 `stateEntry`, `stateDo`, 와 `stateExit` 라고 불리우는 메소드가 있다.
+이 메소드들은 `error` action을 일반 (non-error) `action` 과 함께 정의한다.
+더움 예제는 3개 메소드를 어떻게 사용하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -238,15 +234,13 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetEE]
 
 === Configuring Pseudo States
 
-_Pseudo state_ configuration is usually done by configuring states and
-transitions. Pseudo states are automatically added to state machine as
-states.
+_Pseudo state_ 설정은 보통 state와 transition을 설정하여 한다. Pseudo states 는 state machine 에 자동으로 state로 추가된다.
 
 ==== Initial State
 
-You can mark a particular state as initial state by using the `initial()`
-method. This initial action is good, for example, to initialize
-extended state variables. The following example shows how to use the `initial()` method:
+당신은 특정 state 를 `initial()` 메소드를 이용해서 initial state로 표시할 수 있다.
+예를 들어, 이 initial action은 확장된 state variable을 초기화하기에 좋다.
+다음 예제는 `initial()` 을 어떻게 사용하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -257,9 +251,9 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetQ]
 
 ==== Terminate State
 
-You can mark a particular state as being an end state by using the `end()` method.
-You can do so at most once for each individual sub-machine or region.
-The following example shows how to use the `end()` method:
+당신은 `end()` 을 사용해서 특정 state 를 end state로 표시할 수 있다.
+당신은 각 sub-machine 또는 region 별로 최대 한번 할 수 있다.
+다음 예제는 `end()` 메소드를 어떻게 사용하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -270,9 +264,9 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetAA]
 
 ==== State History
 
-You can define state history once for each individual state machine.
-You need to choose its state identifier and set either `History.SHALLOW` or
-`History.DEEP`. The following example uses `History.SHALLOW`:
+당신은 각 state machine 당 한번씩 state history를 정의할 수 있다.
+당신은 state identifier와 `History.SHALLOW` 또는 `History.DEEP` 를 선택할 필요가 있다.
+다음 예제는 `History.SHALLOW` 를 어떻게 사용하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -281,29 +275,23 @@ include::samples/DocsConfigurationSampleTests.java[tags=snippetR]
 ----
 ====
 
-Also, as the preceding example shows, you can optionally define a default
-transition from a history state into a state vertex in a same machine.
-This transition takes place as a default if, for example, the machine has
-never been entered -- thus, no history would be available. If a default
-state transition is not defined, then normal entry into a region is
-done. This default transition is also used if a machine's history is
-a final state.
+또한, 앞의 예제가 보여주듯, 당신은 선택적으로 동일한 state machine 내에서 history state 에서 정점 state 까지의 기본 transition을 정의할 수 있다.
+예를 들어, 이 transition은 machine이 입력한 적이 없어 사용 가능한 history가 없는 경우 기본으로 채택된다.
+만약 기본 state transition 이 정의되지 않았다면, region 으로의 정상적인 entry 는 끝이다.
+이 기본 transition은 machine의 history가 final state일 경우에도 역시 사용된다.
 
 ==== Choice State
 
-Choice needs to be defined in both states and transitions to work
-properly. You can mark a particular state as being a choice state by using the `choice()`
-method. This state needs to match source state when a transition is
-configured for this choice.
+Choice는 적절히 동작하기 위해 state와 transition 모두에 정의될 필요가 있다.
+당신은 `choice()` 메소드를 사용해서 특정 state가 choice state가 되도록 표시할 수 있다.
+이 state는 transition이 이 choice를 위해 설정될 때 source state를 일치시킬 필요가 있다.
 
-You can configure a transition by using `withChoice()`, where you define source
-state and a `first/then/last` structure, which is equivalent to a normal
-`if/elseif/else`. With `first` and `then`, you can specify a guard just
-as you would use a condition with `if/elseif` clauses.
+당신은 transition을 `withChoice()` 을 사용하여 
+source state와 일반적인 `if/elseif/else` 와 동일한 `first/then/last` 구조로 설정할 수 있다. 
+`first` 와 `then` 으로, 당신은 당신이 `if/elseif` 구절로 컨디션을 사용하듯 guard를 특정할 수 있다.
 
-A transition needs to be able to exist, so you must make sure to use `last`.
-Otherwise, the configuration is ill-formed. The following example shows how to define
-a choice state:
+당신이 `last` 을 확실히 사용할 수 있도록 transition 이 존재할 수 있아야 한다. 
+아니면, 설정은 잘못 설정된 것이다. 다음 예제는 choice state를 어떻게 정의하는지를 보여준다.:
 
 ====
 [source,java,indent=0]
@@ -311,6 +299,7 @@ a choice state:
 include::samples/DocsConfigurationSampleTests.java[tags=snippetS]
 ----
 ====
+
 
 Actions can be run with both incoming and outgoing transitions of
 a choice pseudostate. As the following example shows, one dummy lambda
